@@ -2,30 +2,57 @@ package modelo.entidades;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "multa")
 public class Multa implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	int idMulta;
-	int idVehiculo;
-	double valor;
-	String anio;
-	String descripcion;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idMulta;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "idVehiculo")
+	private Vehiculo vehiculo;
+	@Column(name = "valor")
+	private Double valor;
+	@Column(name = "anio")
+	private String anio;
+	@Column(name = "descripcion")
+	private String descripcion;
 	
 	public Multa() {}
 
-	public Multa(int idVehiculo, double valor, String anio, String descripcion) {
+	public Vehiculo getVehiculo() {
+		return vehiculo;
+	}
+
+	public void setVehiculo(Vehiculo vehiculo) {
+		this.vehiculo = vehiculo;
+	}
+
+	public Multa(Vehiculo vehiculo, Double valor, String anio, String descripcion) {
 		super();
-		this.idVehiculo = idVehiculo;
+		this.vehiculo = vehiculo;
 		this.valor = valor;
 		this.anio = anio;
 		this.descripcion = descripcion;
 	}
 
-	public Multa(int idMulta, int idVehiculo, double valor, String anio, String descripcion) {
+	public Multa(Integer idMulta, Vehiculo vehiculo, Double valor, String anio, String descripcion) {
 		super();
 		this.idMulta = idMulta;
-		this.idVehiculo = idVehiculo;
+		this.vehiculo = vehiculo;
 		this.valor = valor;
 		this.anio = anio;
 		this.descripcion = descripcion;
@@ -39,27 +66,19 @@ public class Multa implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public int getIdMulta() {
+	public Integer getIdMulta() {
 		return idMulta;
 	}
 
-	public void setIdMulta(int idMulta) {
+	public void setIdMulta(Integer idMulta) {
 		this.idMulta = idMulta;
 	}
 
-	public int getIdVehiculo() {
-		return idVehiculo;
-	}
-
-	public void setIdVehiculo(int idVehiculo) {
-		this.idVehiculo = idVehiculo;
-	}
-
-	public double getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
-	public void setValor(double valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 
@@ -69,6 +88,19 @@ public class Multa implements Serializable {
 
 	public void setAnio(String anio) {
 		this.anio = anio;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Multa) {
+			return ((Multa) obj).idMulta == this.idMulta;
+		}
+		return false;
 	}
 	
 	
