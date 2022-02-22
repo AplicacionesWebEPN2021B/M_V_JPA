@@ -7,8 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import modelo.dao.MultaDAO;
-import modelo.dao.VehiculoDAO;
+import modelo.dao.DAOFactory;
 import modelo.entidades.Multa;
 import modelo.entidades.Vehiculo;
 
@@ -22,18 +21,19 @@ public class RegistrarMultaController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idVehiculo = Integer.parseInt(request.getParameter("idVehiculo"));
-		Vehiculo vehiculo = VehiculoDAO.getVehiculo(idVehiculo);
+		Vehiculo vehiculo = DAOFactory.getDAOFactory().getVehiculoDAO().getById(idVehiculo);
 		request.setAttribute("vehiculo", vehiculo);
 		request.getRequestDispatcher("/jsp/registrarMulta.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idVehiculo = Integer.parseInt(request.getParameter("idVehiculo"));
+		Vehiculo vehiculo = DAOFactory.getDAOFactory().getVehiculoDAO().getById(idVehiculo);
 		double valor = Double.parseDouble(request.getParameter("txtValor"));
 		String anio = request.getParameter("txtAnio");
 		String descripcion = request.getParameter("txtDescripcion");
 		
-		MultaDAO.insertar(new Multa(idVehiculo, valor, anio, descripcion));
+		DAOFactory.getDAOFactory().getMultaDAO().create(new Multa(vehiculo, valor, anio, descripcion));
 		response.sendRedirect("ListarMultasController?idVehiculo="+idVehiculo);
 	}
 

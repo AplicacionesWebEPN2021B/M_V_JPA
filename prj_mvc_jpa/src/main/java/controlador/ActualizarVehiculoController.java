@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import modelo.dao.VehiculoDAO;
+import modelo.dao.DAOFactory;
 import modelo.entidades.Vehiculo;
 
 /**
@@ -25,8 +25,7 @@ public class ActualizarVehiculoController extends HttpServlet {
 
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
-		Vehiculo v = VehiculoDAO.getVehiculo(Integer.parseInt(request.getParameter(idVehiculo)));
+    	Vehiculo v = DAOFactory.getDAOFactory().getVehiculoDAO().getById(Integer.parseInt(request.getParameter(idVehiculo)));
 		request.setAttribute(idVehiculo, Integer.parseInt(request.getParameter(idVehiculo)));
 		request.setAttribute("placa", v.getPlaca());
 		request.setAttribute("marca", v.getMarca());
@@ -49,10 +48,9 @@ public class ActualizarVehiculoController extends HttpServlet {
 		String chasis =  request.getParameter("txtChasis");
 		String propietario =  request.getParameter("txtPropietario");
 		
-		Vehiculo v = new Vehiculo(idVehiculo,placa,marca,anio,modelo,chasis,propietario);
-		VehiculoDAO personaDAO = new VehiculoDAO();
-		personaDAO.actualizar(v);
+		DAOFactory.getDAOFactory().getVehiculoDAO().update(new Vehiculo(idVehiculo,placa,marca,anio,modelo,chasis,propietario));
 		response.sendRedirect("ListarVehiculosController");
+		
 		} catch(IOException e) {
 			System.err.println("IOException: " + e);
 		}

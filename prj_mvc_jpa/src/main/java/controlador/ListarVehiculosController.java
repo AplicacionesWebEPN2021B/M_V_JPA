@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import modelo.dao.VehiculoDAO;
+import modelo.dao.DAOFactory;
 import modelo.entidades.Vehiculo;
 
 /**
@@ -28,8 +28,7 @@ public class ListarVehiculosController extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		Object loginString = session.getAttribute("login");
 		if (session != null  && loginString != null) {
-			VehiculoDAO vehiculoDAO = new VehiculoDAO();
-			List<Vehiculo> listaVehiculos = vehiculoDAO.getVehiculos();
+			List<Vehiculo> listaVehiculos = DAOFactory.getDAOFactory().getVehiculoDAO().getAll();
 			request.setAttribute("listaVehiculos", listaVehiculos);
 			request.getRequestDispatcher("/jsp/listarVehiculos.jsp").forward(request, response);			
 		}
