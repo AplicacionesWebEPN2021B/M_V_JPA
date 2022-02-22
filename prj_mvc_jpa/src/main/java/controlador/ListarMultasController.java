@@ -1,7 +1,7 @@
 package controlador;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import modelo.dao.MultaDAO;
-import modelo.dao.VehiculoDAO;
+import modelo.dao.DAOFactory;
 import modelo.entidades.Multa;
 import modelo.entidades.Vehiculo;
+import modelo.implementacionJPA.JPAMultaDAO;
 
 
 @WebServlet("/ListarMultasController")
@@ -25,9 +25,10 @@ public class ListarMultasController extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		JPAMultaDAO multaDAO = (JPAMultaDAO) DAOFactory.getDAOFactory().getMultaDAO();
 		int idVehiculo = Integer.parseInt(request.getParameter("idVehiculo"));
-		Vehiculo vehiculo = VehiculoDAO.getVehiculo(idVehiculo);
-		ArrayList<Multa> multas = (ArrayList<Multa>) MultaDAO.getMultas(idVehiculo);
+		Vehiculo vehiculo = DAOFactory.getDAOFactory().getVehiculoDAO().getById(idVehiculo);
+		List<Multa> multas = (List<Multa>) multaDAO.getAllMultas(idVehiculo);
 		request.setAttribute("multas", multas);
 		request.setAttribute("vehiculo", vehiculo);
 		request.getRequestDispatcher("/jsp/listarMultas.jsp").forward(request, response);
