@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import modelo.dao.VehiculoDAO;
+import modelo.dao.DAOFactory;
 import modelo.entidades.Vehiculo;
 
 /**
@@ -35,9 +35,7 @@ public class RegistrarVehiculoController extends HttpServlet {
 		String chasis =  request.getParameter("txtChasis");
 		String propietario =  request.getParameter("txtPropietario");
 		
-		Vehiculo v = new Vehiculo(placa,marca,anio,modelo,chasis,propietario);
-		VehiculoDAO personaDAO = new VehiculoDAO();
-		personaDAO.insertar(v);
+		DAOFactory.getDAOFactory().getVehiculoDAO().create(new Vehiculo(placa,marca,anio,modelo,chasis,propietario));
 		response.sendRedirect("ListarVehiculosController");
 	}
 
