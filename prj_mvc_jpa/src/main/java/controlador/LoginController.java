@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import modelo.dao.*;
+import modelo.dao.PersonaDAO;
+import modelo.implementacionJPA.JPAPersonaDAO;
 
 @WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
@@ -27,7 +28,8 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String usuario = request.getParameter("usuario");
 		String password = request.getParameter("password");
-		if(PersonaDAO.autenticar(usuario, password)) {
+		JPAPersonaDAO pd = new JPAPersonaDAO();
+		if(pd.autenticar(usuario, password)) {
 			HttpSession session = request.getSession();
 			session.setAttribute("usuario",usuario); 
 			session.setAttribute("login","loged in"); 
