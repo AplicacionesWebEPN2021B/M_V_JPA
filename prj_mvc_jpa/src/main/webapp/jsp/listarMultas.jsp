@@ -16,7 +16,7 @@
 	<%@include file="../templates/banner_interno.html" %>
 	
 	<div class="wrapper">
-		<h2>Deudas vehículo: ${placa}</h2>
+		<h2>Deudas vehículo: ${vehiculo.placa}</h2>
 		<div>
 			<a href="ListarVehiculosController" class="btn btn-outline-dark m-2">Regresar</a>
 			<a href="RegistrarMultaController?idVehiculo=${vehiculo.idVehiculo}"  class="btn btn-primary  m-2">Nueva Multa</a>
