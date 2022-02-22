@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class ConexionBDD {
 	private static ConexionBDD conexionClass = null;
-	private static Connection instancia = null;
+	private static Connection instancia;
 	
 	private ConexionBDD() {
 		try {

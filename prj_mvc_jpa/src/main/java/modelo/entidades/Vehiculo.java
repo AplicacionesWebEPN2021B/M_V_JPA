@@ -2,22 +2,39 @@ package modelo.entidades;
 
 import java.io.Serializable;
 
-public class Vehiculo implements Serializable{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="vehiculo")
+public class Vehiculo  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private int IdVehiculo;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer IdVehiculo;
+	@Column(name = "placa")
 	private String placa;
+	@Column(name = "marca")
 	private String marca;
-	private int anio;
+	@Column(name = "anio")
+	private Integer anio;
+	@Column(name = "modelo")
 	private String modelo;
+	@Column(name = "chasis")
 	private String chasis;
+	@Column(name = "propietario")
 	private String propietario;
 	
 	public Vehiculo() {}
 
 
-	public Vehiculo(int idVehiculo, String placa, String marca, int anio, String modelo, String chasis,
+	public Vehiculo(Integer idVehiculo, String placa, String marca, Integer anio, String modelo, String chasis,
 			String propietario) {
 		super();
 		IdVehiculo = idVehiculo;
@@ -30,7 +47,7 @@ public class Vehiculo implements Serializable{
 	}
 
 
-	public Vehiculo(String placa, String marca, int anio, String modelo, String chasis, String propietario) {
+	public Vehiculo(String placa, String marca, Integer anio, String modelo, String chasis, String propietario) {
 		super();
 		this.placa = placa;
 		this.marca = marca;
@@ -41,12 +58,12 @@ public class Vehiculo implements Serializable{
 	}
 
 
-	public int getIdVehiculo() {
+	public Integer getIdVehiculo() {
 		return IdVehiculo;
 	}
 
 
-	public void setIdVehiculo(int idVehiculo) {
+	public void setIdVehiculo(Integer idVehiculo) {
 		IdVehiculo = idVehiculo;
 	}
 
@@ -71,12 +88,12 @@ public class Vehiculo implements Serializable{
 	}
 
 
-	public int getAnio() {
+	public Integer getAnio() {
 		return anio;
 	}
 
 
-	public void setAnio(int anio) {
+	public void setAnio(Integer anio) {
 		this.anio = anio;
 	}
 
@@ -109,6 +126,20 @@ public class Vehiculo implements Serializable{
 	public void setPropietario(String propietario) {
 		this.propietario = propietario;
 	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Vehiculo) {
+			return ((Vehiculo) obj).IdVehiculo == this.IdVehiculo || ((Vehiculo) obj).placa == this.placa;
+		}
+		return false;
+	}
 
 
 	@Override
@@ -117,5 +148,5 @@ public class Vehiculo implements Serializable{
 				+ chasis + ", propietario=" + propietario + "]";
 	}
 	
-	
+
 }
