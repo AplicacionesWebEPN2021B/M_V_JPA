@@ -17,15 +17,17 @@ import modelo.entidades.Vehiculo;
 @WebServlet("/ActualizarVehiculoController")
 public class ActualizarVehiculoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	String idVehiculo = "idVehiculo";
        
     public ActualizarVehiculoController() {
         super();
     }
 
-
+    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Vehiculo v = VehiculoDAO.getVehiculo(Integer.parseInt(request.getParameter("idVehiculo")));
-		request.setAttribute("idVehiculo", Integer.parseInt(request.getParameter("idVehiculo")));
+    	
+		Vehiculo v = VehiculoDAO.getVehiculo(Integer.parseInt(request.getParameter(idVehiculo)));
+		request.setAttribute(idVehiculo, Integer.parseInt(request.getParameter(idVehiculo)));
 		request.setAttribute("placa", v.getPlaca());
 		request.setAttribute("marca", v.getMarca());
 		request.setAttribute("anio", v.getAnio());
@@ -36,8 +38,9 @@ public class ActualizarVehiculoController extends HttpServlet {
 		
 	}
 
-
+    @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
 		int idVehiculo = Integer.parseInt(request.getParameter("txtVehiculo"));
 		String placa =  request.getParameter("txtPlaca");
 		String marca =  request.getParameter("txtMarca");
@@ -50,6 +53,9 @@ public class ActualizarVehiculoController extends HttpServlet {
 		VehiculoDAO personaDAO = new VehiculoDAO();
 		personaDAO.actualizar(v);
 		response.sendRedirect("ListarVehiculosController");
+		} catch(IOException e) {
+			System.err.println("IOException: " + e);
+		}
 	}
 
 }
