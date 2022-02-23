@@ -24,6 +24,28 @@ public class JPAVehiculoDAO extends JPAGenericDAO<Vehiculo, Integer> implements 
 		
 		return vehiculos;
 	}
+
+	@Override
+	public Vehiculo getVehiculoByPlaca(String placa) {
+		Vehiculo v = null;
+		String consulta = "SELECT v FROM Vehiculo v WHERE v.placa = :placa";
+		Query q = this.em.createQuery(consulta);
+		q.setParameter("placa", placa);
+		v = (Vehiculo) q.getSingleResult();
+		
+		return v;
+	}
+
+	@Override
+	public Vehiculo getVehiculoByChasis(String chasis) {
+		Vehiculo v = null;
+		String consulta = "SELECT v FROM Vehiculo v WHERE v.chasis = :chasis";
+		Query q = this.em.createQuery(consulta);
+		q.setParameter("chasis", chasis);
+		v = (Vehiculo) q.getSingleResult();
+		
+		return v;
+	}
 	
 	
 
