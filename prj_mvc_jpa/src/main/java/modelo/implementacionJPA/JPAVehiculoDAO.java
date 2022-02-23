@@ -21,7 +21,6 @@ public class JPAVehiculoDAO extends JPAGenericDAO<Vehiculo, Integer> implements 
 		String consultaVehiculos = "SELECT v FROM Vehiculo v";
 		Query q = this.em.createQuery(consultaVehiculos);
 		vehiculos = q.getResultList();
-		
 		return vehiculos;
 	}
 
@@ -46,6 +45,7 @@ public class JPAVehiculoDAO extends JPAGenericDAO<Vehiculo, Integer> implements 
 		
 		return v;
 	}
+	
 	
 	
 
