@@ -12,6 +12,7 @@ public class JPAPersonaDAO extends JPAGenericDAO<Persona,Integer> implements Per
 		super(Persona.class);
 	}
 	
+	@Override
 	public boolean autenticar(String usuario, String password) {
 		List<Persona> personas = new ArrayList<Persona>();
 		String seleccionarPersona = "SELECT p FROM Persona p WHERE p.usuario = :usuario AND p.password = :password";
