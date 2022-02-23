@@ -2,6 +2,7 @@ package controlador;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,10 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.dao.DAOFactory;
 import modelo.dao.MultaDAO;
 import modelo.dao.VehiculoDAO;
 import modelo.entidades.Multa;
 import modelo.entidades.Vehiculo;
+import modelo.implementacionJPA.JPAMultaDAO;
 
 
 
@@ -42,22 +45,22 @@ public class ConsultarMultasUsuarioController extends HttpServlet {
 				
 				
 				//2.- Llamo al modelo para conocer si puedo autenticar 
-				
-				Vehiculo vehiculoPlaca = VehiculoDAO.getVehiculoByPlaca(placaChasis);
-				Vehiculo vehiculoChasis = VehiculoDAO.getVehiculoByChasis(placaChasis);
+				JPAMultaDAO multaDAO = (JPAMultaDAO) DAOFactory.getDAOFactory().getMultaDAO();
+				Vehiculo vehiculoPlaca = DAOFactory.getDAOFactory().getVehiculoDAO().getVehiculoByPlaca(placaChasis);
+				Vehiculo vehiculoChasis = DAOFactory.getDAOFactory().getVehiculoDAO().getVehiculoByChasis(placaChasis);
 				
 				if(vehiculoPlaca != null && opcion.equals("r")) {
 					
 					HttpSession miSesion = request.getSession();
 					miSesion.setAttribute("usuario", vehiculoPlaca);
-					ArrayList<Multa> multaByPlaca = (ArrayList<Multa>) MultaDAO.getMultas(vehiculoPlaca.getIdVehiculo());
+					List<Multa> multaByPlaca = (List<Multa>) multaDAO.getAllMultas(vehiculoPlaca.getIdVehiculo());
 					request.setAttribute("multasUsuario", multaByPlaca);
 					request.getRequestDispatcher("/jsp/listarMultasUsuario.jsp").forward(request, response);
 					
 				}else if(vehiculoChasis != null && opcion.equals("r1")){
 					HttpSession miSesion = request.getSession();
 					miSesion.setAttribute("usuario", vehiculoChasis);
-					ArrayList<Multa> multaByChasis = (ArrayList<Multa>) MultaDAO.getMultas(vehiculoChasis.getIdVehiculo());
+					List<Multa> multaByChasis = (List<Multa>) multaDAO.getAllMultas(vehiculoChasis.getIdVehiculo());
 					request.setAttribute("multasUsuario", multaByChasis);
 					request.getRequestDispatcher("/jsp/listarMultasUsuario.jsp").forward(request, response);
 					

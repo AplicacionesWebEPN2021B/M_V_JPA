@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import modelo.dao.DAOFactory;
 import modelo.dao.VehiculoDAO;
 
 /**
@@ -22,7 +24,7 @@ public class EliminarVehiculoController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idVehiculo = Integer.parseInt(request.getParameter("idVehiculo"));
-		VehiculoDAO.eliminar(idVehiculo);
+		DAOFactory.getDAOFactory().getVehiculoDAO().deleteById(idVehiculo);
 		response.sendRedirect("ListarVehiculosController");
 	}
 
