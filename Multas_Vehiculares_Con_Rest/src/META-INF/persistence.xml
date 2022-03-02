@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                                 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+  version="2.1">
+	<persistence-unit name="JPA_Multas_Vehiculares" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>modelo.entidades.Vehiculo</class>
+		<class>modelo.entidades.Multa</class>
+		<class>modelo.entidades.Persona</class>
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://20.201.64.194:3306/mvc_multas"/>
+			<property name="javax.persistence.jdbc.user" value="project"/>
+			<property name="javax.persistence.jdbc.password" value=""/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+			<property name="eclipselink.ddl-generation" value="none"/>
+		</properties>
+	</persistence-unit>
+</persistence>
